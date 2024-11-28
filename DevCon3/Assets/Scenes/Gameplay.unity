@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 353273844}
   m_Layer: 0
   m_Name: Top
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -247,7 +247,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 353273841}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 1803c3324f4e5f445aefa57e411461e3, type: 2}
+  m_Material: {fileID: 6200000, guid: a5e9c5876736a1845b6119f4390783eb, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -484,7 +484,7 @@ GameObject:
   - component: {fileID: 747216887}
   m_Layer: 0
   m_Name: Bottom
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -614,7 +614,7 @@ GameObject:
   - component: {fileID: 834934954}
   m_Layer: 0
   m_Name: Right
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -827,7 +827,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1203749521}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 1803c3324f4e5f445aefa57e411461e3, type: 2}
+  m_Material: {fileID: 6200000, guid: 6217486ef7a63e245b5544dd8c2ef2e2, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -868,7 +868,7 @@ Rigidbody2D:
   m_Mass: 0.0594
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: 1803c3324f4e5f445aefa57e411461e3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
@@ -963,7 +963,7 @@ GameObject:
   - component: {fileID: 1685082901}
   m_Layer: 0
   m_Name: Player2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1044,7 +1044,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1685082896}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 6217486ef7a63e245b5544dd8c2ef2e2, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1135,7 +1135,7 @@ GameObject:
   - component: {fileID: 1709083849}
   m_Layer: 0
   m_Name: Left
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1269,7 +1269,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &1806471564
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1397,7 +1397,7 @@ GameObject:
   - component: {fileID: 1842093869}
   m_Layer: 0
   m_Name: Player1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1478,7 +1478,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1842093864}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 6217486ef7a63e245b5544dd8c2ef2e2, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

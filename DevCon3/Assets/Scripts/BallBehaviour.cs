@@ -32,44 +32,33 @@ public class BallBehaviour : MonoBehaviour
             new Vector2(paddleObject[1].transform.position.x - 2, paddleObject[1].transform.position.y)
         };
 
-        StartingPositions();
+        //StartingPositions();
 
         rb2D = GetComponent<Rigidbody2D>();
+        LaunchBall();
 
-        Vector2 weight = new Vector2(0, mass * gravity); //Weight calculation for ball
-        rb2D.AddForce(weight, ForceMode2D.Impulse);
+        //Vector2 weight = new Vector2(0, mass * gravity); //Weight calculation for ball
+        //rb2D.AddForce(weight, ForceMode2D.Impulse);
     }
 
     // Update is called once per frame
     void Update()
     {       
-        if (Input.GetKey(launchKey))
-        {            
-            BallPhysics();
-        }
+        
     }
-
-    void BallPhysics()
+    void LaunchBall()
     {
-        //Apply force to ball 
-        Vector2 applyForce = new Vector2(appliedForce, 0);
-        rb2D.AddForce(applyForce * Time.deltaTime, ForceMode2D.Impulse);
+        //Launch ball in random direction
+        float x = Random.Range(0, 2);
+        float y = Random.Range(-2, 2);
+
+        Vector2 launch = new Vector2(x, y).normalized;
+        rb2D.velocity = launch * appliedForce;
     }
 
     void StartingPositions()
     {
-        //int randomNum = playerNum;
-
-        //switch (randomNum)
-        //{
-        //    case 0:
-        //        ballPos.position = paddleObject[0].transform.position;
-        //        break;
-        //    case 1:
-        //        ballPos.position = paddleObject[1].transform.position;
-        //        break;
-        //}
-
+        //Ball starts at either player 1 or 2 positions
         if(playerNum == 1)
         {
             ballPos.position = startingPos[0];
@@ -82,16 +71,11 @@ public class BallBehaviour : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Walls"))
+        if (collision.gameObject.CompareTag("Player"))
         {
-            // Get the collision normal (direction perpendicular to the paddle's surface)
-            Vector2 collisionNormal = collision.GetContact(0).normal;
-
-            // Reverse the velocity along the normal
-            Vector2 newVelocity = Vector2.Reflect(rb2D.velocity, collisionNormal).normalized * bounceForce;
-
-            // Apply the new velocity to the ball
-            rb2D.velocity = newVelocity;
+            //Makes sure that the paddles applies a force 
+            Vector2 paddle = collision.rigidbody.velocity;
+            rb2D.velocity += paddle * appliedForce;
         }
     }
 }
