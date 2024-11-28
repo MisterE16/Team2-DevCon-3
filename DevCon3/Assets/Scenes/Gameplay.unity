@@ -247,7 +247,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 353273841}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 1803c3324f4e5f445aefa57e411461e3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -565,7 +565,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 747216884}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: a5e9c5876736a1845b6119f4390783eb, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -898,6 +898,7 @@ MonoBehaviour:
   - {fileID: 1842093864}
   - {fileID: 1685082896}
   gravity: 9.81
+  appliedForce: 10
 --- !u!1 &1343568525
 GameObject:
   m_ObjectHideFlags: 0
@@ -1105,7 +1106,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 5
 --- !u!114 &1685082901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1539,7 +1540,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 5
 --- !u!114 &1842093869
 MonoBehaviour:
   m_ObjectHideFlags: 0

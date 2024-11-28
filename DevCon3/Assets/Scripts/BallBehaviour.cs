@@ -18,17 +18,21 @@ public class BallBehaviour : MonoBehaviour
     [SerializeField] private float gravity = 9.81f; 
     private float mass = 0.0594f; //average tennis ball mass (kg)
     private float frictionCoefficient = 0.8f; //friction coefficient assuming level is made with hard court material
+    [SerializeField] public float appliedForce = 0.5f;
+    private float bounceForce = 2f;
 
     // Start is called before the first frame update
     void Start()
     {
         isLaunched = false;
         playerNum = Random.Range(1, 3);
-        //startingPos = new Vector2[]
-        //{
-        //    new Vector2(paddleObject[0].transform.position.x + 2, paddleObject[0].transform.position.y),
-        //    new Vector2(paddleObject[1].transform.position.x - 2, paddleObject[1].transform.position.y)
-        //};
+        startingPos = new Vector2[]
+        {
+            new Vector2(paddleObject[0].transform.position.x + 2, paddleObject[0].transform.position.y),
+            new Vector2(paddleObject[1].transform.position.x - 2, paddleObject[1].transform.position.y)
+        };
+
+        StartingPositions();
 
         rb2D = GetComponent<Rigidbody2D>();
 
@@ -38,18 +42,18 @@ public class BallBehaviour : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        if(Input.GetKey(launchKey))
-        {
-            //StartingPositions();
+    {       
+        if (Input.GetKey(launchKey))
+        {            
             BallPhysics();
         }
     }
 
     void BallPhysics()
     {
-        Vector2 applyForce = Vector2.right;
-        rb2D.AddForce(applyForce, ForceMode2D.Impulse);
+        //Apply force to ball 
+        Vector2 applyForce = new Vector2(appliedForce, 0);
+        rb2D.AddForce(applyForce * Time.deltaTime, ForceMode2D.Impulse);
     }
 
     void StartingPositions()
@@ -73,6 +77,21 @@ public class BallBehaviour : MonoBehaviour
         else
         {
             ballPos.position = startingPos[1];
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Walls"))
+        {
+            // Get the collision normal (direction perpendicular to the paddle's surface)
+            Vector2 collisionNormal = collision.GetContact(0).normal;
+
+            // Reverse the velocity along the normal
+            Vector2 newVelocity = Vector2.Reflect(rb2D.velocity, collisionNormal).normalized * bounceForce;
+
+            // Apply the new velocity to the ball
+            rb2D.velocity = newVelocity;
         }
     }
 }
