@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -42,33 +43,49 @@ public class GameManager : MonoBehaviour
     {
         ball = FindObjectOfType<BallBehaviour>(); //Reference the ball behaviour script
 
-        //At the start of the game, randomly generate number
-        randomStart = Random.Range(1, 3);
-
-        //If the number generated is 1, its player 1's turn
-        if(randomStart == 1)
-        {
-            currentTurn = playerTurn.player1;
-        }
-
-        //If the number generated is 2, its player 2's turn
-        if (randomStart == 2)
-        {
-            currentTurn = playerTurn.player2;
-        }
+        PlayerTurn();
     }
 
     // Update is called once per frame
     void Update()
     {
-        switch(currentTurn)
+        SceneConditions();
+
+        //switch(currentTurn)
+        //{
+        //    case playerTurn.player1:
+        //        ball.ballPos.position = ball.startingPos[0];
+        //        break;
+        //    case playerTurn.player2:
+        //        ball.ballPos.position = ball.startingPos[1];
+        //        break;
+        //}
+
+    }
+
+    void PlayerTurn()
+    {
+        ////At the start of the game, randomly generate number
+        //randomStart = Random.Range(1, 3);
+
+        ////If the number generated is 1, its player 1's turn
+        //if (randomStart == 1)
+        //{
+        //    currentTurn = playerTurn.player1;
+        //}
+
+        ////If the number generated is 2, its player 2's turn
+        //if (randomStart == 2)
+        //{
+        //    currentTurn = playerTurn.player2;
+        //}
+    }
+
+    void SceneConditions()
+    {
+        if(Input.GetKey(KeyCode.R))
         {
-            case playerTurn.player1:
-                ball.ballPos.position = ball.startingPos[0];
-                break;
-            case playerTurn.player2:
-                ball.ballPos.position = ball.startingPos[1];
-                break;
+            SceneManager.LoadScene("Gameplay");
         }
     }
 }
