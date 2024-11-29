@@ -28,6 +28,8 @@ Need:
 
 Stretch Goals:  
 - Potential physic powerups
+- Audio (background music, sound effects, etc.)
+- Sprite Designs?
 
 ## Mechanic 
 Our main mechanic is to score points with the ball using physics. This is a unique remake of pong whereas instead of a constant static ball, it's a object with a mass and center of gravity. In this way it adds a unique challenge and an interesting gameplay.
