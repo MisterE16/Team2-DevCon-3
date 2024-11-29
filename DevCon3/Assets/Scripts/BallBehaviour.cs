@@ -58,9 +58,20 @@ public class BallBehaviour : MonoBehaviour
         Vector2 launch = new Vector2(x, y).normalized;
         rb2D.velocity = launch * appliedForce;
 
+        bool isLeft = rb2D.transform.position.x < 0;
+
         //Apply a torque force onto the ball
         float torque = spinForce;
-        rb2D.AddTorque(torque, ForceMode2D.Impulse);
+        
+        if (isLeft)
+        {
+            rb2D.AddTorque(-torque, ForceMode2D.Impulse);
+        }
+        else
+        {
+            rb2D.AddTorque(torque, ForceMode2D.Impulse);
+        }
+       
 
         //Calculate the area of the sprite
         float radius = ballSprite.sprite.bounds.extents.x;
