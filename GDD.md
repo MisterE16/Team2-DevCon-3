@@ -21,4 +21,14 @@ We believe a physics based “Pong” like game will enhance realism and add a l
 
 
 # Things we would need/Stretch goals
+Need:
+- Paddle controls (for two player)
+- Ball physics / mechanic
+- Scoring system (for final submission)
+
+Stretch Goals:  
+- Potential physic powerups
+
+# Mechanic 
+Our main mechanic is to score points with the ball using physics. This is a unique remake of pong whereas instead of a constant static ball, it's a object with a mass and center of gravity. In this way it adds a unique challenge and an interesting gameplay.
 
