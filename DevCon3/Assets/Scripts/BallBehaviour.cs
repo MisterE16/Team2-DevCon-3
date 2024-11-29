@@ -13,14 +13,14 @@ public class BallBehaviour : MonoBehaviour
 
     //Physic calculation variables
     [SerializeField] private float gravity = 9.81f; 
-    private float mass = 0.0594f; //average tennis ball mass (kg)
+    private float mass = 0.1f; //average tennis ball mass (kg)
     private float dragCoefficient = 0.55f; //Drag coefficient of a tennis ball, found on google search
     [SerializeField] public float appliedForce = 0.05f;
     private float bounceForce = 2f;
     [SerializeField] private float spinForce;
     [SerializeField] private float dragForce;
-    private SpriteRenderer sprite;
-    private float ballVelocity = 1;
+    private SpriteRenderer ballSprite;
+    private float ballVelocity = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +35,7 @@ public class BallBehaviour : MonoBehaviour
         };
 
         //StartingPositions();
-        sprite = GetComponent<SpriteRenderer>();
+        ballSprite = GetComponent<SpriteRenderer>();
         rb2D = GetComponent<Rigidbody2D>();
         CalculateForces();
 
@@ -53,7 +53,7 @@ public class BallBehaviour : MonoBehaviour
     {
         //Launch ball in random direction
         float x = Random.Range(0, 2) == 0 ? -1 : 1;
-        float y = Random.Range(-1, 1);
+        float y = 0;
 
         Vector2 launch = new Vector2(x, y).normalized;
         rb2D.velocity = launch * appliedForce;
@@ -63,11 +63,13 @@ public class BallBehaviour : MonoBehaviour
         rb2D.AddTorque(torque, ForceMode2D.Impulse);
 
         //Calculate the area of the sprite
-        float radius = sprite.sprite.texture.width / 2;
+        float radius = ballSprite.sprite.bounds.extents.x;
         float area = Mathf.PI * Mathf.Pow(radius, 2);
 
         //Calculate the drag force
         dragForce = 0.5f * dragCoefficient * area * Mathf.Pow(ballVelocity, 2);
+        Vector3 drag = -rb2D.velocity.normalized * dragForce;
+        rb2D.AddForce(drag);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
