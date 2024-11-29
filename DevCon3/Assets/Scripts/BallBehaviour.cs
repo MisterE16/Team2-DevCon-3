@@ -7,8 +7,6 @@ public class BallBehaviour : MonoBehaviour
     [SerializeField] public Rigidbody2D rb2D {  get; private set; }
     [SerializeField] public KeyCode launchKey { get; private set; } = KeyCode.Space;
 
-    private bool isLaunched;
-
     public Transform ballPos;
     public GameObject[] paddleObject;
     [SerializeField] public Vector2[] startingPos {  get; private set; }
@@ -16,16 +14,20 @@ public class BallBehaviour : MonoBehaviour
     //Physic calculation variables
     [SerializeField] private float gravity = 9.81f; 
     private float mass = 0.0594f; //average tennis ball mass (kg)
-    private float frictionCoefficient = 0.8f; //friction coefficient assuming level is made with hard court material
+    private float dragCoefficient = 0.55f; //Drag coefficient of a tennis ball, found on google search
     [SerializeField] public float appliedForce = 0.05f;
     private float bounceForce = 2f;
+    [SerializeField] private float spinForce;
+    [SerializeField] private float dragForce;
+    private SpriteRenderer sprite;
+    private float ballVelocity = 1;
 
     // Start is called before the first frame update
     void Start()
     {
         ballPos = transform;
 
-        isLaunched = false;
+        spinForce = appliedForce;
         startingPos = new Vector2[]
         {
             new Vector2(paddleObject[0].transform.position.x + 2, paddleObject[0].transform.position.y),
@@ -33,12 +35,13 @@ public class BallBehaviour : MonoBehaviour
         };
 
         //StartingPositions();
-
+        sprite = GetComponent<SpriteRenderer>();
         rb2D = GetComponent<Rigidbody2D>();
-        //LaunchBall();
+        CalculateForces();
 
-        //Vector2 weight = new Vector2(0, mass * gravity); //Weight calculation for ball
-        //rb2D.AddForce(weight, ForceMode2D.Impulse);
+        //Add gravity onto 
+        Vector2 weight = new Vector2(0, mass * gravity); //Weight calculation for ball
+        rb2D.AddForce(weight, ForceMode2D.Impulse);
     }
 
     // Update is called once per frame
@@ -46,7 +49,7 @@ public class BallBehaviour : MonoBehaviour
     {       
         
     }
-    void LaunchBall()
+    void CalculateForces()
     {
         //Launch ball in random direction
         float x = Random.Range(0, 2) == 0 ? -1 : 1;
@@ -54,6 +57,17 @@ public class BallBehaviour : MonoBehaviour
 
         Vector2 launch = new Vector2(x, y).normalized;
         rb2D.velocity = launch * appliedForce;
+
+        //Apply a torque force onto the ball
+        float torque = spinForce;
+        rb2D.AddTorque(torque, ForceMode2D.Impulse);
+
+        //Calculate the area of the sprite
+        float radius = sprite.sprite.texture.width / 2;
+        float area = Mathf.PI * Mathf.Pow(radius, 2);
+
+        //Calculate the drag force
+        dragForce = 0.5f * dragCoefficient * area * Mathf.Pow(ballVelocity, 2);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -63,9 +77,6 @@ public class BallBehaviour : MonoBehaviour
             //Makes sure that the paddles applies a force 
             Vector2 paddle = collision.rigidbody.velocity;
             rb2D.velocity += paddle * appliedForce;
-
-            Quaternion rotation = Quaternion.Euler(0, 0, 1);
-            rb2D.transform.rotation = rotation;
         }
     }
 }

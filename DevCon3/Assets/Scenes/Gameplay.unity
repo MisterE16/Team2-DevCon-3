@@ -138,7 +138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &311271833
 Transform:
   m_ObjectHideFlags: 0
@@ -148,7 +148,7 @@ Transform:
   m_GameObject: {fileID: 311271832}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.1207627, y: 1.2154915, z: -0.0032867133}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -166,6 +166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91b568cebf6569543823b56de4d5fdd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentTurn: 0
+  randomStart: 0
 --- !u!1 &353273841
 GameObject:
   m_ObjectHideFlags: 0
@@ -909,7 +911,7 @@ Transform:
   m_GameObject: {fileID: 1203749521}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.31, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.08, y: 0.08, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -963,9 +965,9 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 0.0594
-  m_LinearDrag: 0
+  m_LinearDrag: 0.000491723
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: 1803c3324f4e5f445aefa57e411461e3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
@@ -989,13 +991,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a8213f51bf359c44b8fda74309f4286, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNum: 0
   ballPos: {fileID: 1203749523}
   paddleObject:
   - {fileID: 1842093864}
   - {fileID: 1685082896}
   gravity: 9.81
   appliedForce: 10
+  spinForce: 0
+  dragForce: 0
 --- !u!1 &1343568525
 GameObject:
   m_ObjectHideFlags: 0
@@ -1185,7 +1188,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1685082896}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -1647,7 +1650,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1842093864}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
