@@ -17,10 +17,10 @@ Making the game replayable, possibly with a scoring system (possible stretch goa
 We believe a physics based “Pong” like game will enhance realism and add a layer of immersion within it. This is due to bounces, momentum, and speed adjustments that mimic real world behavior. Having an unpredictable version of Pong prevents repetition and allows players to adapt at a higher level of difficulty, which potentially creates an engaging experience with strong replayability.   
 
 
-# Used Assets 
+## Used Assets 
 
 
-# Things we would need/Stretch goals
+## Things we would need/Stretch goals
 Need:
 - Paddle controls (for two player)
 - Ball physics / mechanic
@@ -29,6 +29,6 @@ Need:
 Stretch Goals:  
 - Potential physic powerups
 
-# Mechanic 
+## Mechanic 
 Our main mechanic is to score points with the ball using physics. This is a unique remake of pong whereas instead of a constant static ball, it's a object with a mass and center of gravity. In this way it adds a unique challenge and an interesting gameplay.
 
