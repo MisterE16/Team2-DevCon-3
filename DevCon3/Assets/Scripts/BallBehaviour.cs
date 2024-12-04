@@ -49,10 +49,11 @@ public class BallBehaviour : MonoBehaviour
     {       
         
     }
+
     void CalculateForces()
     {
         //Launch ball in random direction
-        float x = Random.Range(0, 2) == 0 ? -1 : 1;
+        float x = 5;
         float y = 0;
 
         Vector2 launch = new Vector2(x, y).normalized;
@@ -85,11 +86,17 @@ public class BallBehaviour : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Walls"))
+        if (collision.gameObject.CompareTag("Player"))
         {
-            //Makes sure that the paddles applies a force 
-            Vector2 paddle = collision.rigidbody.velocity;
-            rb2D.velocity += paddle * appliedForce;
+            //Makes sure that the paddles applies a force
+            Vector2 bounceAngle = new Vector2(1, 1).normalized;
+
+            if(collision.transform.position.x > transform.position.x)
+            {
+                bounceAngle.x = -1;
+            }
+
+            rb2D.velocity += bounceAngle * appliedForce;
         }
     }
 }
