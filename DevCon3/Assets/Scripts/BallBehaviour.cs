@@ -9,6 +9,8 @@ public class BallBehaviour : MonoBehaviour
 
     public Transform ballPos;
     public GameObject[] paddleObject;
+    GameManager gameManager;
+
     [SerializeField] public Vector2[] startingPos {  get; private set; }
 
     //Physic calculation variables
@@ -26,6 +28,7 @@ public class BallBehaviour : MonoBehaviour
     void Start()
     {
         ballPos = transform;
+        gameManager = FindAnyObjectByType<GameManager>();
 
         spinForce = appliedForce;
         startingPos = new Vector2[]
@@ -97,6 +100,22 @@ public class BallBehaviour : MonoBehaviour
             }
 
             rb2D.velocity += bounceAngle * appliedForce;
+        }
+
+        if (collision.gameObject.CompareTag("Walls"))
+        {
+            if(collision.gameObject.name == "Left")
+            {
+                Vector2 startPosition = new Vector2(0, 0);
+                transform.position = startPosition;
+                gameManager.P2ScoreTracker();
+            }
+            if (collision.gameObject.name == "Right")
+            {
+                Vector2 startPosition = new Vector2(0, 0);
+                transform.position = startPosition;
+                gameManager.P1ScoreTracker();
+            }
         }
     }
 }

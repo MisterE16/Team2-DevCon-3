@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,12 +12,29 @@ public class GameManager : MonoBehaviour
     //Enumerator that keeps track of player turns
     public enum playerTurn {player1, player2};
 
+    //Enumerator that is holding two different game states
+    public enum gameState { pause, play};
+
     //A variable that keeps track of which turn to start
     public playerTurn currentTurn;
 
+    //Keep track of what the current game state is
+    public gameState currentState;
+
     private bool hasGameStarted = false;
 
-    [SerializeField] private int randomStart;
+    [SerializeField] private float startCountdown = 3; //A countdown for when the game can start
+
+    //Text mesh pro variables
+    public TextMeshProUGUI player1ScoreText;
+    public TextMeshProUGUI player2ScoreText;
+    public TextMeshProUGUI countdownText;
+
+    //Score tracking variables
+    private int p1Score;
+    private int player1CurrentScore = 0;
+    private int p2Score;
+    private int player2CurrentScore = 0;
 
     BallBehaviour ball;
 
@@ -42,43 +60,96 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         ball = FindObjectOfType<BallBehaviour>(); //Reference the ball behaviour script
+        //currentState = gameState.pause;
+        //GameStates(currentState);
 
-        PlayerTurn();
+        //Set the current score values to be equal to the current value
+        p1Score = player1CurrentScore;
+        p2Score = player2CurrentScore;
+
+        UpdateUI();
     }
 
     // Update is called once per frame
     void Update()
     {
         SceneConditions();
-
-        //switch(currentTurn)
-        //{
-        //    case playerTurn.player1:
-        //        ball.ballPos.position = ball.startingPos[0];
-        //        break;
-        //    case playerTurn.player2:
-        //        ball.ballPos.position = ball.startingPos[1];
-        //        break;
-        //}
-
+        //StartGame();
     }
 
-    void PlayerTurn()
+    //At the start of the game there will be a countdown 
+    //before either player can hit the start button
+    //sending the ball in a direction depending on who hit first
+    void StartGame()
     {
-        ////At the start of the game, randomly generate number
-        //randomStart = Random.Range(1, 3);
+        bool player1Start = Input.GetKeyDown(KeyCode.Tab);
+        bool player2Start = Input.GetKeyDown(KeyCode.Backspace);
 
-        ////If the number generated is 1, its player 1's turn
-        //if (randomStart == 1)
-        //{
-        //    currentTurn = playerTurn.player1;
-        //}
+        //Properly check input and prevent multiple coroutine calls
+        if (!hasGameStarted && (player1Start || player2Start))
+        {
+            hasGameStarted = true; //Prevent multiple countdowns from happening at  once
+            StartCoroutine(StartCountdown());            
+        }
+    }
 
-        ////If the number generated is 2, its player 2's turn
-        //if (randomStart == 2)
-        //{
-        //    currentTurn = playerTurn.player2;
-        //}
+    IEnumerator StartCountdown()
+    {
+        
+        hasGameStarted = false;
+        currentState = gameState.pause;
+        GameStates(currentState);
+
+        //Loop until countdown is 0
+        while(startCountdown > 0)
+        {
+            Debug.Log($"Countdown: {startCountdown}");
+            yield return new WaitForSeconds(1f); //Wait 1 second between each number
+            startCountdown--;
+        }
+
+        hasGameStarted = true;        
+        currentState = gameState.play;
+        GameStates(currentState);
+
+        startCountdown = 3;
+    }
+
+    void GameStates(gameState state)
+    {
+        switch (currentState)
+        {
+            case gameState.pause:
+                Time.timeScale = 0;
+                break;
+            case gameState.play: 
+                Time.timeScale = 1;
+                break;
+        }
+    }
+
+    void UpdateUI()
+    {
+        //Make text values that will translate to the score value on the UI
+        player1ScoreText.text = "P1 Score: " + p1Score.ToString();
+        player2ScoreText.text = "P2 Score: " + p2Score.ToString();
+
+        //Turn the countdown value into text
+        countdownText.text = "Start in: " + startCountdown.ToString();
+    }
+
+    //If this function is called, add a point then update UI
+    public void P1ScoreTracker()
+    {
+        p1Score++;
+        UpdateUI();
+    }
+
+    //If this function is called, add a point then update UI
+    public void P2ScoreTracker()
+    {
+        p2Score++;
+        UpdateUI();
     }
 
     void SceneConditions()
