@@ -17,7 +17,6 @@ public class BallBehaviour : MonoBehaviour
     private float mass = 0.1f; //average tennis ball mass (kg)
     private float dragCoefficient = 0.55f; //Drag coefficient of a tennis ball, found on google search
     [SerializeField] public float appliedForce = 0.05f;
-    private float bounceForce = 2f;
     [SerializeField] private float spinForce;
     [SerializeField] private float dragForce;
     private SpriteRenderer ballSprite;

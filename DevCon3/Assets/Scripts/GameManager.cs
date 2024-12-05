@@ -21,8 +21,6 @@ public class GameManager : MonoBehaviour
     //Keep track of what the current game state is
     public gameState currentState;
 
-    private bool hasGameStarted = false;
-
     [SerializeField] private float startCountdown; //A countdown for when the game can start
 
     //Text mesh pro variables
