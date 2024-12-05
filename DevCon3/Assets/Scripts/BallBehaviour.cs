@@ -5,10 +5,11 @@ using UnityEngine;
 public class BallBehaviour : MonoBehaviour
 {
     [SerializeField] public Rigidbody2D rb2D {  get; private set; }
-    [SerializeField] public KeyCode launchKey { get; private set; } = KeyCode.Space;
 
     public Transform ballPos;
     public GameObject[] paddleObject;
+    GameManager gameManager;
+
     [SerializeField] public Vector2[] startingPos {  get; private set; }
 
     //Physic calculation variables
@@ -26,6 +27,7 @@ public class BallBehaviour : MonoBehaviour
     void Start()
     {
         ballPos = transform;
+        gameManager = FindAnyObjectByType<GameManager>();
 
         spinForce = appliedForce;
         startingPos = new Vector2[]
@@ -49,10 +51,11 @@ public class BallBehaviour : MonoBehaviour
     {       
         
     }
+
     void CalculateForces()
     {
         //Launch ball in random direction
-        float x = Random.Range(0, 2) == 0 ? -1 : 1;
+        float x = 5;
         float y = 0;
 
         Vector2 launch = new Vector2(x, y).normalized;
@@ -85,11 +88,34 @@ public class BallBehaviour : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Walls"))
+        if (collision.gameObject.CompareTag("Player"))
         {
-            //Makes sure that the paddles applies a force 
-            Vector2 paddle = collision.rigidbody.velocity;
-            rb2D.velocity += paddle * appliedForce;
+            //Makes sure that the paddles applies a force
+            Vector2 bounceAngle = new Vector2(3, 5).normalized;
+
+            if(collision.transform.position.x > transform.position.x)
+            {
+                bounceAngle.x = -1.5f;
+            }
+
+            rb2D.velocity = bounceAngle * appliedForce;
+        }
+
+        if (collision.gameObject.CompareTag("Walls"))
+        {
+            //Reset the ball's position when it collides with the right or left walls
+            if(collision.gameObject.name == "Left")
+            {
+                Vector2 startPosition = new Vector2(0, 0);
+                transform.position = startPosition;
+                gameManager.P2ScoreTracker();
+            }
+            if (collision.gameObject.name == "Right")
+            {
+                Vector2 startPosition = new Vector2(0, 0);
+                transform.position = startPosition;
+                gameManager.P1ScoreTracker();
+            }
         }
     }
 }

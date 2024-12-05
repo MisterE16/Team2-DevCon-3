@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,14 +12,29 @@ public class GameManager : MonoBehaviour
     //Enumerator that keeps track of player turns
     public enum playerTurn {player1, player2};
 
+    //Enumerator that is holding two different game states
+    public enum gameState { pause, play};
+
     //A variable that keeps track of which turn to start
     public playerTurn currentTurn;
 
+    //Keep track of what the current game state is
+    public gameState currentState;
+
     private bool hasGameStarted = false;
 
-    [SerializeField] private int randomStart;
+    [SerializeField] private float startCountdown; //A countdown for when the game can start
 
-    BallBehaviour ball;
+    //Text mesh pro variables
+    public TextMeshProUGUI player1ScoreText;
+    public TextMeshProUGUI player2ScoreText;
+    public TextMeshProUGUI countdownText;
+
+    //Score tracking variables
+    private int p1Score;
+    private int player1CurrentScore = 0;
+    private int p2Score;
+    private int player2CurrentScore = 0;
 
     private void Awake()
     {
@@ -41,51 +57,82 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ball = FindObjectOfType<BallBehaviour>(); //Reference the ball behaviour script
+        //currentState = gameState.pause;
+        //GameStates(currentState);
 
-        PlayerTurn();
+        //Set the current score values to be equal to the current value
+        p1Score = player1CurrentScore;
+        p2Score = player2CurrentScore;
+        startCountdown = 3;
+
+
+        UpdateUI();
     }
 
     // Update is called once per frame
     void Update()
     {
         SceneConditions();
-
-        //switch(currentTurn)
-        //{
-        //    case playerTurn.player1:
-        //        ball.ballPos.position = ball.startingPos[0];
-        //        break;
-        //    case playerTurn.player2:
-        //        ball.ballPos.position = ball.startingPos[1];
-        //        break;
-        //}
-
     }
 
-    void PlayerTurn()
+    //Defining game state enumerators for when this function is called
+    //can change the game depending on the purpose
+    void GameStates(gameState state)
     {
-        ////At the start of the game, randomly generate number
-        //randomStart = Random.Range(1, 3);
+        switch (currentState)
+        {
+            case gameState.pause:
+                Time.timeScale = 0;
+                break;
+            case gameState.play: 
+                Time.timeScale = 1;
+                break;
+        }
+    }
 
-        ////If the number generated is 1, its player 1's turn
-        //if (randomStart == 1)
-        //{
-        //    currentTurn = playerTurn.player1;
-        //}
+    void UpdateUI()
+    {
+        //Make text values that will translate to the score value on the UI
+        player1ScoreText.text = "P1 Score: " + p1Score.ToString();
+        player2ScoreText.text = "P2 Score: " + p2Score.ToString();
 
-        ////If the number generated is 2, its player 2's turn
-        //if (randomStart == 2)
-        //{
-        //    currentTurn = playerTurn.player2;
-        //}
+        //Turn the countdown value into text
+        countdownText.text = "Start in: " + startCountdown.ToString();
+    }
+
+    //If this function is called, add a point then update UI
+    public void P1ScoreTracker()
+    {
+        p1Score++;
+        UpdateUI();
+    }
+
+    //If this function is called, add a point then update UI
+    public void P2ScoreTracker()
+    {
+        p2Score++;
+        UpdateUI();
     }
 
     void SceneConditions()
     {
+        //If the r key is pressed then the scene resets
+        //Only for occasions where if something unexpected happens 
         if(Input.GetKey(KeyCode.R))
         {
             SceneManager.LoadScene("Gameplay");
+        }
+
+        //If either player 1 or player 2's score goes above 10 
+        //Load the win screen for either that reaches a score of 10 first
+        if(p1Score >= 10)
+        {
+            SceneManager.LoadScene("Player1 Wins");
+        }
+
+        if (p2Score >= 10)
+        {
+            SceneManager.LoadScene("Player2 Wins");
         }
     }
 }
