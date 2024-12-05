@@ -5,7 +5,6 @@ using UnityEngine;
 public class BallBehaviour : MonoBehaviour
 {
     [SerializeField] public Rigidbody2D rb2D {  get; private set; }
-    [SerializeField] public KeyCode launchKey { get; private set; } = KeyCode.Space;
 
     public Transform ballPos;
     public GameObject[] paddleObject;
@@ -92,18 +91,19 @@ public class BallBehaviour : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             //Makes sure that the paddles applies a force
-            Vector2 bounceAngle = new Vector2(1, 5).normalized;
+            Vector2 bounceAngle = new Vector2(3, 5).normalized;
 
             if(collision.transform.position.x > transform.position.x)
             {
-                bounceAngle.x = -1;
+                bounceAngle.x = -1.5f;
             }
 
-            rb2D.velocity += bounceAngle * appliedForce;
+            rb2D.velocity = bounceAngle * appliedForce;
         }
 
         if (collision.gameObject.CompareTag("Walls"))
         {
+            //Reset the ball's position when it collides with the right or left walls
             if(collision.gameObject.name == "Left")
             {
                 Vector2 startPosition = new Vector2(0, 0);
