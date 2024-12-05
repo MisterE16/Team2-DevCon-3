@@ -92,7 +92,7 @@ public class BallBehaviour : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             //Makes sure that the paddles applies a force
-            Vector2 bounceAngle = new Vector2(1, 1).normalized;
+            Vector2 bounceAngle = new Vector2(1, 5).normalized;
 
             if(collision.transform.position.x > transform.position.x)
             {

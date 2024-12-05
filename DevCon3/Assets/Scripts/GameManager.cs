@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     private bool hasGameStarted = false;
 
-    [SerializeField] private float startCountdown = 3; //A countdown for when the game can start
+    [SerializeField] private float startCountdown; //A countdown for when the game can start
 
     //Text mesh pro variables
     public TextMeshProUGUI player1ScoreText;
@@ -66,7 +66,9 @@ public class GameManager : MonoBehaviour
         //Set the current score values to be equal to the current value
         p1Score = player1CurrentScore;
         p2Score = player2CurrentScore;
+        startCountdown = 3;
 
+        //StartCoroutine(StartCountdown());
         UpdateUI();
     }
 
@@ -150,6 +152,14 @@ public class GameManager : MonoBehaviour
     {
         p2Score++;
         UpdateUI();
+    }
+
+    public void Countdown()
+    {
+        while(startCountdown > 0)
+        {
+            startCountdown--;
+        }        
     }
 
     void SceneConditions()
