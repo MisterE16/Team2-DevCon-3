@@ -164,9 +164,23 @@ public class GameManager : MonoBehaviour
 
     void SceneConditions()
     {
+        //If the r key is pressed then the scene resets
+        //Only for occasions where if something unexpected happens 
         if(Input.GetKey(KeyCode.R))
         {
             SceneManager.LoadScene("Gameplay");
+        }
+
+        //If either player 1 or player 2's score goes above 10 
+        //Load the win screen for either that reaches a score of 10 first
+        if(p1Score >= 10)
+        {
+            SceneManager.LoadScene("Player1 Wins");
+        }
+
+        if (p2Score >= 10)
+        {
+            SceneManager.LoadScene("Player2 Wins");
         }
     }
 }
