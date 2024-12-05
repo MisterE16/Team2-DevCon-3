@@ -36,8 +36,6 @@ public class GameManager : MonoBehaviour
     private int p2Score;
     private int player2CurrentScore = 0;
 
-    BallBehaviour ball;
-
     private void Awake()
     {
         //If the game manager doesn't exist, make this the game manager
@@ -59,7 +57,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ball = FindObjectOfType<BallBehaviour>(); //Reference the ball behaviour script
         //currentState = gameState.pause;
         //GameStates(currentState);
 
@@ -68,7 +65,7 @@ public class GameManager : MonoBehaviour
         p2Score = player2CurrentScore;
         startCountdown = 3;
 
-        //StartCoroutine(StartCountdown());
+
         UpdateUI();
     }
 
@@ -76,47 +73,10 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         SceneConditions();
-        //StartGame();
     }
 
-    //At the start of the game there will be a countdown 
-    //before either player can hit the start button
-    //sending the ball in a direction depending on who hit first
-    void StartGame()
-    {
-        bool player1Start = Input.GetKeyDown(KeyCode.Tab);
-        bool player2Start = Input.GetKeyDown(KeyCode.Backspace);
-
-        //Properly check input and prevent multiple coroutine calls
-        if (!hasGameStarted && (player1Start || player2Start))
-        {
-            hasGameStarted = true; //Prevent multiple countdowns from happening at  once
-            StartCoroutine(StartCountdown());            
-        }
-    }
-
-    IEnumerator StartCountdown()
-    {
-        
-        hasGameStarted = false;
-        currentState = gameState.pause;
-        GameStates(currentState);
-
-        //Loop until countdown is 0
-        while(startCountdown > 0)
-        {
-            Debug.Log($"Countdown: {startCountdown}");
-            yield return new WaitForSeconds(1f); //Wait 1 second between each number
-            startCountdown--;
-        }
-
-        hasGameStarted = true;        
-        currentState = gameState.play;
-        GameStates(currentState);
-
-        startCountdown = 3;
-    }
-
+    //Defining game state enumerators for when this function is called
+    //can change the game depending on the purpose
     void GameStates(gameState state)
     {
         switch (currentState)
@@ -152,14 +112,6 @@ public class GameManager : MonoBehaviour
     {
         p2Score++;
         UpdateUI();
-    }
-
-    public void Countdown()
-    {
-        while(startCountdown > 0)
-        {
-            startCountdown--;
-        }        
     }
 
     void SceneConditions()
