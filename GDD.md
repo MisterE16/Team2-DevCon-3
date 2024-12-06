@@ -44,3 +44,9 @@ How we implemented it
 - For the velocity, we kept most of the gravitational forces and vectors to bounce off of surfaces, but implemented a vector force that would force the ball upward at an angle, whether it's the left or right paddle
 - Tried to implement a countdown function that would start the game but had difficulties with it just not working at all.
 
+## Metrics
+1. Gravitational Force: For gravity, it was calculated by the average mass of a tennis ball with 59 grams (then adjusted to 100 grams which worked much nicer), then multiply it by the average gravity scale of 9.81 m/s^2. Adding the force onto the rigidbody of the ball object so that it will be a constant downward force on the ball as it's moving around.
+2. Torque: Have a standard spinning force while the ball is moving across screen and set up where the ball will either spin left or right depending on the velocity is negative or not. 
+3. Drag Force: For simplicity, took the lowest average drag coefficient of a tennis ball at 0.55, apply it to the drag force formula (https://en.wikipedia.org/wiki/Drag_equation). After calculating it, created a vector force where the rigidbody velocity will always have an acting drag force against it.
+4. Applied Forces: We have a consistant applied force of 0.05 onto a horizontal vector, as to prevent too fast of movement for the ball (even then it is still fairly quick), but also not slow enough for the ball to stop moving entirely. 
+
