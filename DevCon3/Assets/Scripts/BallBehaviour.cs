@@ -43,7 +43,7 @@ public class BallBehaviour : MonoBehaviour
 
         //Add gravity onto 
         Vector2 weight = new Vector2(0, mass * gravity); //Weight calculation for ball
-        rb2D.AddForce(weight, ForceMode2D.Impulse);
+        rb2D.AddForce(-weight, ForceMode2D.Impulse);
     }
 
     // Update is called once per frame
