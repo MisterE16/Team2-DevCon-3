@@ -48,8 +48,22 @@ public class BallBehaviour : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {       
-        
+    {
+        //At the start of the game either players 1 or 2 can start the game if they press the keys below
+        //bool player1Start = Input.GetKey(KeyCode.E);
+        //bool player2Start = Input.GetKey(KeyCode.LeftArrow);
+
+        //if(player1Start)
+        //{
+        //    gameManager.currentState = GameManager.gameState.play;
+        //    gameManager.GameStates(gameManager.currentState);
+        //}
+
+        //if (player2Start)
+        //{
+        //    gameManager.currentState = GameManager.gameState.play;
+        //    gameManager.GameStates(gameManager.currentState);
+        //}
     }
 
     void CalculateForces()

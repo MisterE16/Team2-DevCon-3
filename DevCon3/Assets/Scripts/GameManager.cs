@@ -28,7 +28,6 @@ public class GameManager : MonoBehaviour
     //Text mesh pro variables
     public TextMeshProUGUI player1ScoreText;
     public TextMeshProUGUI player2ScoreText;
-    public TextMeshProUGUI countdownText;
 
     //Score tracking variables
     private int p1Score;
@@ -65,7 +64,9 @@ public class GameManager : MonoBehaviour
         p2Score = player2CurrentScore;
         startCountdown = 3;
 
-
+        //As the game loads in, it will be in a paused game state
+        //currentState = gameState.pause;
+        //GameStates(currentState);
         UpdateUI();
     }
 
@@ -77,7 +78,7 @@ public class GameManager : MonoBehaviour
 
     //Defining game state enumerators for when this function is called
     //can change the game depending on the purpose
-    void GameStates(gameState state)
+    public void GameStates(gameState state)
     {
         switch (currentState)
         {
@@ -96,8 +97,6 @@ public class GameManager : MonoBehaviour
         player1ScoreText.text = "P1 Score: " + p1Score.ToString();
         player2ScoreText.text = "P2 Score: " + p2Score.ToString();
 
-        //Turn the countdown value into text
-        countdownText.text = "Start in: " + startCountdown.ToString();
     }
 
     //If this function is called, add a point then update UI
