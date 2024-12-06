@@ -34,3 +34,13 @@ Stretch Goals:
 ## Mechanic 
 Our main mechanic is to score points with the ball using physics. This is a unique remake of pong whereas instead of a constant static ball, it's a object with a mass and center of gravity. In this way it adds a unique challenge and an interesting gameplay.
 
+## Feedback and Implementation
+Feedback we recieved 
+- To make sure that the ball has a consistant horizontal velocity
+- Or add an upward force whenever the ball touches one of the paddles, due to the ball having gravity, after a while it would start rolling across the ground
+- The other piece of feedback was to implement a function that starts the game either after some sort of countdown or when one of the two players hit a button first to start
+
+How we implemented it
+- For the velocity, we kept most of the gravitational forces and vectors to bounce off of surfaces, but implemented a vector force that would force the ball upward at an angle, whether it's the left or right paddle
+- Tried to implement a countdown function that would start the game but had difficulties with it just not working at all.
+
